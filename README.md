@@ -9,10 +9,10 @@
 
 ## 学習
 
-"""
-python train.py
-"""
 
+```
+python train.py
+```
 
 
 ## 使ったライブラリ
@@ -22,7 +22,3 @@ python train.py
 - torchnet==0.0.4
 - tqdm==4.56.0
 
-
-
-
-defaultで
