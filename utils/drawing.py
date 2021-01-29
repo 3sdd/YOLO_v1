@@ -7,7 +7,7 @@ from PIL import Image
 import torchvision
 import os
 
-font_path=os.path.join(os.path.dirname(__file__),"../fonts/ttf/KleeOne-Regular.ttf")
+font_path=os.path.join(os.path.dirname(__file__),"../fonts/ttf/KleeOne-SemiBold.ttf")
 font=ImageFont.truetype(font_path,20)
 
 # def draw_gt_bboxes(image,annotation_object,copy=True,color=(0,255,0),size=1):
@@ -84,7 +84,6 @@ def draw_grid_on_image(image,S,width=0,fill="black",copy=True):
 
 #TODO:ラベルも表示もっと見やすくしたい
 def draw_boxes_on_image(image,bounding_boxes,S=7,draw_grid=True,color="red",index2class=None):
-    text_fill=(255,255,255,255)
     # bounding_boxes [dict] : { "(x,y)":{"box":[x,y,w,h,c],"label":None} , "(x,y)": ....}
     
     #pil画像に変換する
@@ -130,7 +129,8 @@ def draw_boxes_on_image(image,bounding_boxes,S=7,draw_grid=True,color="red",inde
                     label=bbox["label"]
                     if index2class is not None:
                         label=index2class(label)
-                    d.text((x1,y1),label,fill=text_fill,font=font)
+                    d.text((x1,y1),label,fill=(255,255,255),font=font\
+                        stroke_width=2,stroke_fill=(0,0,0))
 
         image[batch_idx]=img
 
