@@ -1,10 +1,14 @@
 
-from PIL import ImageDraw
+from PIL import ImageDraw, ImageFont
 import torch
 # from imgaug.augmentables.bbs import BoundingBox,BoundingBoxesOnImage
 import numpy as np
 from PIL import Image
 import torchvision
+import os
+
+font_path=os.path.join(os.path.dirname(__file__),"../fonts/ttf/KleeOne-Regular.ttf")
+font=ImageFont.truetype(font_path)
 
 # def draw_gt_bboxes(image,annotation_object,copy=True,color=(0,255,0),size=1):
 #     if copy:
@@ -126,7 +130,7 @@ def draw_boxes_on_image(image,bounding_boxes,S=7,draw_grid=True,color="red",inde
                     label=bbox["label"]
                     if index2class is not None:
                         label=index2class(label)
-                    d.text((x1,y1),label,fill=text_fill)
+                    d.text((x1,y1),label,fill=text_fill,font=font)
 
         image[batch_idx]=img
 
