@@ -8,7 +8,7 @@ import torchvision
 import os
 
 font_path=os.path.join(os.path.dirname(__file__),"../fonts/ttf/KleeOne-Regular.ttf")
-font=ImageFont.truetype(font_path)
+font=ImageFont.truetype(font_path,20)
 
 # def draw_gt_bboxes(image,annotation_object,copy=True,color=(0,255,0),size=1):
 #     if copy:
