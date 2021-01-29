@@ -129,7 +129,7 @@ def draw_boxes_on_image(image,bounding_boxes,S=7,draw_grid=True,color="red",inde
                     label=bbox["label"]
                     if index2class is not None:
                         label=index2class(label)
-                    d.text((x1,y1),label,fill=(255,255,255),font=font\
+                    d.text((x1,y1),label,fill=(255,255,255),font=font,\
                         stroke_width=2,stroke_fill=(0,0,0))
 
         image[batch_idx]=img
