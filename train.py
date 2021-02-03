@@ -45,6 +45,7 @@ def train():
         dt.RandomGrayscale(p=0.05),
         dt.Resize(config.image_size),
         dt.RandomScale([0.5,1.5],p=0.5),
+        dt.RandomHorizontalFlip(p=0.5)
     ]))
     transforms_test=dt.VocTransforms(dt.Compose([
         dt.ToTensor(),

@@ -142,6 +142,25 @@ class RandomGrayscale(DetectionTransforms):
             return F.rgb_to_grayscale(img, num_output_channels=num_output_channels),target
         return img, target
 
+class RandomHorizontalFlip(DetectionTransforms):
+    def __init__(self, p=0.5):
+        super().__init__()
+        self.p = p
+    def forward(self, img, target):
+        if torch.rand(1) < self.p:
+            width, height = F._get_image_size(img)
+            #矩形情報を反転する
+            # new_target=[]
+            for i in range(len(target)):
+                xmin,xmax=target[i][0],target[i][2]
+                #xmin
+                target[i][0]=width-xmax 
+                #xmax
+                target[i][2]=width-xmin 
+                # new_target.append([xmin,ymin,xmax,ymax])
+
+            return F.hflip(img), target
+        return img,target
 # class Translation(torch.nn.Module):
 #     def __init__(self,translate):
 #         """
