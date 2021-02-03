@@ -14,7 +14,7 @@ class TinyYOLOv1(nn.Module):
         self.model=nn.Sequential(
             # (1,3,448,448) -> ???
             # *conv_bn_relu(3,16,kernel_size=7,stride=2,padding=7//2), #TODO:pad=1
-            *conv_bn_relu(3,16,kernel_size=7,stride=2,padding=1), #TODO:pad=1
+            *conv_bn_relu(3,16,kernel_size=3,stride=2,padding=1), #TODO:pad=1
             nn.MaxPool2d(kernel_size=2,stride=2),
 
             #(1,???) -> (1, ????)

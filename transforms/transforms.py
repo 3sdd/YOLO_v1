@@ -1,5 +1,6 @@
 import torch
 import torchvision.transforms as transforms
+import torchvision.transforms.functional as F
 from collections.abc import Sequence
 
 def _check_sequence_input(x, name, req_sizes):
@@ -62,7 +63,7 @@ class Compose():
     #     format_string += '\n)'
     #     return format_string
 
-class DetectionTransform(torch.nn.Module):
+class DetectionTransforms(torch.nn.Module):
     def __init__(self):
         super().__init__()
         self.removed_index_list=[]
@@ -70,7 +71,7 @@ class DetectionTransform(torch.nn.Module):
 
 #TODO:transforms.Resizeと同じような感じにしたい
 #注意: サイズは (size,size)になる。正方形以外はまだできない
-class Resize(DetectionTransform):
+class Resize(DetectionTransforms):
     def __init__(self,size,interpolation=2):
         super().__init__()
         self.image_size=size
@@ -121,7 +122,26 @@ class ColorJitter(torch.nn.Module):
         image=self.color_jitter(image)
         return image,target
 
-        
+
+class RandomGrayscale(DetectionTransforms):
+    def __init__(self, p=0.1):
+        super().__init__()
+        self.p = p
+
+    def forward(self, img, target):
+        """ランダムにグレースケール化する
+
+        Args:
+            img (Tensor): 元画像
+
+        Returns:
+            Tensor: ランダムにグレースケール化した画像
+        """
+        num_output_channels = F._get_image_num_channels(img)
+        if torch.rand(1) < self.p:
+            return F.rgb_to_grayscale(img, num_output_channels=num_output_channels),target
+        return img, target
+
 # class Translation(torch.nn.Module):
 #     def __init__(self,translate):
 #         """

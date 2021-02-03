@@ -42,6 +42,7 @@ def train():
     transforms_train=dt.VocTransforms(dt.Compose([
         dt.ColorJitter(saturation=0.5),
         dt.ToTensor(),
+        dt.RandomGrayscale(p=0.05),
         dt.Resize(config.image_size),
         dt.RandomScale([0.5,1.5],p=0.5),
     ]))
