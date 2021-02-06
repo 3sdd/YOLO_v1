@@ -36,7 +36,7 @@ class YOLOLoss():
             p_maps: tensor (batch_size,20,7,7),
             annotations:list (batch_size,)
         """
-        self.clear_saved_loss_items()
+        self.clear_loss_items()
         batch_size=boxes.size(0)
         device=boxes.device
         num_classes=p_maps.size(1)
@@ -202,17 +202,20 @@ class YOLOLoss():
 
         return loss/batch_size
 
-    def clear_saved_loss_items(self):
+    def clear_loss_items(self):
         self.item1=0
         self.item2=0
         self.item3=0
         self.item4=0
         self.item5=0
 
+    @property
     def localization_loss(self):
         return self.item1+self.item2
+    @property
     def confident_loss(self):
         return self.item3+self.item4
+    @property
     def classification_loss(self):
         return self.item5
 

@@ -103,9 +103,9 @@ def train():
                 #ロス保存
                 batch_size=images.size(0)
                 losses.add(loss.item(),batch_size)
-                losses_localization.add(criterion.localization_loss(),batch_size)
-                losses_classification.add(criterion.classification_loss(),batch_size)
-                losses_confident.add(criterion.confident_loss(),batch_size)
+                losses_localization.add(criterion.localization_loss,batch_size)
+                losses_classification.add(criterion.classification_loss,batch_size)
+                losses_confident.add(criterion.confident_loss,batch_size)
 
                 if writer is not None:
                     writer.add_scalar("Loss/train",losses.mean,total_iter)
