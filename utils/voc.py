@@ -38,4 +38,4 @@ def voc_collate_fn(batch_list):
     
     annotations = [item[1]["annotation"] for item in batch_list]
 
-    return {'images':images,'annotations':annotations}
+    return images,annotations

@@ -40,8 +40,8 @@ def save_result_images(result_dir,model,dataset,dataset_indices,collate_fn,trans
     dataset.transforms=transforms
     with torch.no_grad():
         for index in dataset_indices:
-            data=collate_fn([dataset[index]])
-            img,annotation=data["images"][0],data["annotations"][0]
+            imgs,annotations=collate_fn([dataset[index]])
+            img,annotation=imgs[0],annotations[0]
             img=img.to(config.device)
             objects=annotation["transformed"]["object"]
             out,p_map=model(img.unsqueeze(0))

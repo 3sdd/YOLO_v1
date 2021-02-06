@@ -87,9 +87,9 @@ def train():
         last_lr=get_lr(optimizer)  
         with tqdm(total=len(dataloader_train),position=0,desc="[train]") as pbar:
             pbar.set_description("[Epoch  %d/%d]"%(epoch,config.num_epochs))
-            for i,d in enumerate(dataloader_train):
+            for i,(images,annotations) in enumerate(dataloader_train):
 
-                images,annotations=d["images"],d["annotations"]
+                # images,annotations=d["images"],d["annotations"]
                 total_iter+=images.size(0)
                 images=images.to(config.device)
 
