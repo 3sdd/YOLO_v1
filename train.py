@@ -96,7 +96,7 @@ def train():
                 boxes,p_maps=model(images)
 
                 optimizer.zero_grad()    
-                loss=criterion(images,boxes,p_maps,annotations)
+                loss=criterion(boxes,p_maps,annotations)
                 loss.backward()
                 optimizer.step()
 

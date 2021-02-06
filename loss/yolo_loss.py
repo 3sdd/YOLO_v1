@@ -28,19 +28,17 @@ class YOLOLoss():
         self.item5=0
         
 
-    def __call__(self,images,boxes,p_maps,annotations):
+    def __call__(self,boxes,p_maps,annotations):
         """
         返り値はlossで　バッチ１つあたりのloss。注意:バッチ分のlossの合計値をbatch sizeで割ってある。
         batchで処理
-            images: tensor  (batch_size,3,448,448)
             boxes: tensor  (batch_size,10,7,7)
             p_maps: tensor (batch_size,20,7,7),
             annotations:list (batch_size,)
         """
         self.clear_saved_loss_items()
-        # print(images.size())
-        batch_size=images.size(0)
-        device=images.device
+        batch_size=boxes.size(0)
+        device=boxes.device
         num_classes=p_maps.size(1)
 
         loss=0
