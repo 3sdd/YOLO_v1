@@ -7,9 +7,4 @@ def voc_collate_fn(batch_list):
     for i in range(len(batch_list)):
         annotations.append(batch_list[i][1]["annotation"])
 
-    for i in range(len(annotations)):
-        obj=annotations[i]["object"]
-        if not isinstance(obj,list):
-            annotations[i]["object"]=[obj]
-
     return {'images':images,'annotations':annotations}
