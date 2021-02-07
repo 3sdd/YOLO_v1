@@ -22,7 +22,9 @@ def get_config():
     c.B=2  # B: 1つのcellで予測するbounding boxの個数
 
     #loss
+    c.object_scale=1
     c.noobject_scale=0.5
+    c.class_scale=1
     c.coord_scale=5
     
     # c.lr=1e-2

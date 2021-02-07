@@ -7,8 +7,13 @@ from .util import get_center, to_relative_center_xy,prediction2truebox
 
 
 class YOLOLoss():
-    def __init__(self,noobject_scale,coord_scale,image_size,S,B,class2index):
+    def __init__(self,object_scale:float, noobject_scale:float,\
+                class_scale:float,coord_scale:float,\
+                image_size:float,S:int,B:int,class2index):
+
+        self.object_scale=object_scale
         self.noobject_scale=noobject_scale # lambda_noobj
+        self.class_scale=class_scale
         self.coord_scale=coord_scale      # lambda_cord 
 
         self.image_size=image_size
@@ -124,7 +129,7 @@ class YOLOLoss():
                 term2=self.coord_scale*(torch.pow(target_box[2].sqrt()-gt_box[2].sqrt(),2)+\
                                         torch.pow(target_box[3].sqrt()-gt_box[3].sqrt(),2))
 
-                term3=torch.pow(target_box[4]-1,2) #TODO:ここの1は本当はiou? iou=iou[0,idx]
+                term3=self.object_scale*torch.pow(target_box[4]-1,2) #TODO:ここの1は本当はiou? iou=iou[0,idx]
 
 
                 self.item1+=term1.item()
@@ -187,7 +192,7 @@ class YOLOLoss():
 
         p_maps_only_object_exists=p_maps*mask_object.unsqueeze(1)
 
-        term5= F.mse_loss(p_maps_only_object_exists,target_class_tensor,reduction="sum")
+        term5= self.class_scale*F.mse_loss(p_maps_only_object_exists,target_class_tensor,reduction="sum")
         loss+=term5
 
         self.item4+=term4.item()

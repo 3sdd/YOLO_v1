@@ -33,8 +33,9 @@ def train():
     print(model)
 
     optimizer=optim.Adam(model.parameters(),lr=config.lr)
-    criterion=YOLOLoss(noobject_scale=config.noobject_scale,coord_scale=config.coord_scale,\
-                    image_size=config.image_size,S=config.S,B=config.B,class2index=voc_class2index)
+    criterion=YOLOLoss(config.object_scale,config.noobject_scale,\
+                        config.class_scale,config.coord_scale,\
+                        image_size=config.image_size,S=config.S,B=config.B,class2index=voc_class2index)
 
     print("optimizer:",optimizer)
 
