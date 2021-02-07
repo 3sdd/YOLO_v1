@@ -114,7 +114,17 @@ def yoloresult2bboxes(boxes,p_map,B,S,threshold=0.5):
     return ret_boxes_list
 
 
-def clamp(x,min,max):
+def clamp(x:float, min:float, max:float)->float:
+    """指定された値xをmin<=x<=maxの範囲に収まるようにx<minはminにx>maxはmaxにする
+
+    Args:
+        x (float): 元の値
+        min (float): 最小値。xがこの値より小さい時はx=minとなる値を返す
+        max (float): 最大値。xがこの値より大きい時はx=maxとなる値を返す
+
+    Returns:
+        float: min<=x<=maxの範囲に収まるようにした値
+    """
     if x<min:
         return min
     elif x>max:
