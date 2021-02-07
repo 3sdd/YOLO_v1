@@ -112,3 +112,12 @@ def yoloresult2bboxes(boxes,p_map,B,S,threshold=0.5):
         ret_boxes_list.append(ret_boxes)
 
     return ret_boxes_list
+
+
+def clamp(x,min,max):
+    if x<min:
+        return min
+    elif x>max:
+        return max
+    else:
+        return x

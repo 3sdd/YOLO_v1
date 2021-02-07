@@ -3,6 +3,8 @@ import torchvision.transforms as transforms
 import torchvision.transforms.functional as F
 from collections.abc import Sequence
 
+from utils import clamp
+
 def _check_sequence_input(x, name, req_sizes):
     msg = req_sizes[0] if len(req_sizes) < 2 else " or ".join([str(s) for s in req_sizes])
     if not isinstance(x, Sequence):
@@ -14,13 +16,6 @@ def _check_sequence_input(x, name, req_sizes):
 # 横: [0,image_width] , 縦: [0,image_height]
 #画像全体を囲むのが (0,0,image_width,image_height)
 
-def clamp(x,min,max):
-    if x<min:
-        return min
-    elif x>max:
-        return max
-    else:
-        return x
 
 class Compose():
     def __init__(self, transforms):
