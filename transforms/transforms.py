@@ -72,7 +72,6 @@ class Resize(DetectionTransforms):
         self.image_size=size
         self.interpolation=interpolation
 
-
     def forward(self,image,target):
         """
         image (Tensor): 変換する画像。　size=(channel,height,width)
@@ -102,16 +101,17 @@ class Resize(DetectionTransforms):
 class ToTensor():
     def __init__(self):
         self.removed_index_list=[]
+
     def __call__(self, pic,target):
         return  transforms.functional.to_tensor(pic),target
 
 
-class ColorJitter(torch.nn.Module):
+class ColorJitter(DetectionTransforms):
     def __init__(self, brightness=0, contrast=0, saturation=0, hue=0):
         super().__init__()
 
         self.color_jitter=transforms.ColorJitter(brightness,contrast,saturation,hue)
-        self.removed_index_list=[]
+
 
     def forward(self,image,target):
         image=self.color_jitter(image)
@@ -141,6 +141,7 @@ class RandomHorizontalFlip(DetectionTransforms):
     def __init__(self, p=0.5):
         super().__init__()
         self.p = p
+
     def forward(self, img, target):
         if torch.rand(1) < self.p:
             width, height = F._get_image_size(img)
@@ -188,7 +189,7 @@ class RandomHorizontalFlip(DetectionTransforms):
 
 #         return image,target
 
-class Scale(torch.nn.Module):
+class Scale(DetectionTransforms):
     def __init__(self,scale):
         super().__init__()
         # _check_sequence_input(scale, "scale", req_sizes=(2, ))
@@ -200,7 +201,6 @@ class Scale(torch.nn.Module):
         self.resample=0
         # self.fillcolor=0 #tensorでfillcolorはつかえない？
 
-        self.removed_index_list=[]
 
     def forward(self,image,target):
         self.removed_index_list=[]
@@ -243,7 +243,7 @@ class Scale(torch.nn.Module):
                 new_bounding_boxes.append([xmin,ymin,xmax,ymax])
         return image,new_bounding_boxes
 
-class RandomScale(torch.nn.Module):
+class RandomScale(DetectionTransforms):
 
     def __init__(self,scale_ranges,p=0.5):
         """
@@ -264,7 +264,6 @@ class RandomScale(torch.nn.Module):
     
         self.transforms_sacle=Scale(1)
 
-        self.removed_index_list=[]
 
     def forward(self,image,target):
         self.removed_index_list=[]
