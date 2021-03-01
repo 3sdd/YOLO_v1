@@ -4,7 +4,7 @@ import copy
 class VocTransforms():
     def __init__(self,transform):
         """
-        voc detectionのtranasforms
+        voc detectionのtransforms
         transform : forward(image,target)をもつtransform。removed_index_listももつ。
         """
         self.transform=transform

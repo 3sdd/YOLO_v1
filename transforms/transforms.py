@@ -264,7 +264,7 @@ class RandomScale(DetectionTransforms):
 
         self.previous_scale=None
     
-        self.transforms_sacle=Scale(1)
+        self.transforms_scale=Scale(1)
 
 
     def forward(self,image,target):
@@ -274,10 +274,10 @@ class RandomScale(DetectionTransforms):
             scale = float(torch.empty(1).uniform_(self.scale_ranges[0], self.scale_ranges[1]).item())
             self.previous_scale=scale
             #scaleを適用
-            self.transforms_sacle.scale=scale
+            self.transforms_scale.scale=scale
             #実行
-            image,target=self.transforms_sacle(image,target)
-            self.removed_index_list=self.transforms_sacle.removed_index_list
+            image,target=self.transforms_scale(image,target)
+            self.removed_index_list=self.transforms_scale.removed_index_list
 
         return image,target
 
