@@ -89,12 +89,13 @@ class Resize(DetectionTransforms):
         for i in range(len(target)):
             xmin,ymin=target[i][0],target[i][1]
             xmax,ymax=target[i][2],target[i][3]
+            label=target[i][4]
             
             xmin= self.image_size/ original_img_width *xmin
             ymin=self.image_size/original_img_height*ymin
             xmax=self.image_size/original_img_width*xmax
             ymax=self.image_size/original_img_height*ymax
-            new_target.append([xmin,ymin,xmax,ymax])
+            new_target.append([xmin,ymin,xmax,ymax,label])
 
         return new_image,new_target
 
@@ -220,6 +221,7 @@ class Scale(DetectionTransforms):
         for i,obj in enumerate(target):
             xmin,ymin=obj[0],obj[1]
             xmax,ymax=obj[2],obj[3]
+            label=obj[4]
             w,h=xmax-xmin,ymax-ymin
 
             #スケール後の画像の左上の座標(px,py)から　座標を scaleしてvalue*scaleしたものを加えて
@@ -240,7 +242,7 @@ class Scale(DetectionTransforms):
             if (xmax-xmin)*(ymax-ymin)==0:
                 self.removed_index_list.append(i)                
             else:
-                new_bounding_boxes.append([xmin,ymin,xmax,ymax])
+                new_bounding_boxes.append([xmin,ymin,xmax,ymax,label])
         return image,new_bounding_boxes
 
 class RandomScale(DetectionTransforms):

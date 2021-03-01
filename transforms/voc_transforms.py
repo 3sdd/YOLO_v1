@@ -35,13 +35,14 @@ class VocTransforms():
             obj=copy.deepcopy(obj)  # コピー前に反映されないようにコピーしておく
 
             bndbox=obj["bndbox"]
+            label=obj["name"]
             xmin,ymin=int(bndbox["xmin"]),int(bndbox["ymin"])
             xmax,ymax=int(bndbox["xmax"]),int(bndbox["ymax"])
             #TODO: これ調べる
             # pascal voc の(xmin,ymin)を左上の頂点が(0,0)となる座標にするために-1する
             xmin,ymin=xmin-1,ymin-1
 
-            bbox_objects.append([xmin,ymin,xmax,ymax])
+            bbox_objects.append([xmin,ymin,xmax,ymax,label])
             dic["object"].append(obj)
 
         #bounding boxにも影響があるtransformを適用
@@ -57,7 +58,7 @@ class VocTransforms():
         
         #TODO: 扱いやすい形式にしたい
         for i in range(len(list_objects)):
-            xmin,ymin,xmax,ymax=bbox_objects[i]
+            xmin,ymin,xmax,ymax,label=bbox_objects[i]
             bndbox=dic["object"][i]["bndbox"]
             
             bndbox["xmin"]=xmin
